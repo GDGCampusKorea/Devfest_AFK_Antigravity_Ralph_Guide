@@ -46,6 +46,13 @@ case "$(uname -s)" in
 esac
 
 count_done() { grep -cE '^- \[x\]' "$PRD" 2>/dev/null || true; }
+# Done when the agent wrote the sentinel OR no unchecked task line is left (saves one agy call).
+all_done() { grep -q "ALL TASKS COMPLETE" "$PROGRESS" 2>/dev/null || ! grep -qE '^- \[ \]' "$PRD"; }
+
+if all_done; then
+  echo "✅ 남은 태스크가 없습니다. PRD.md 에 새 태스크를 추가한 뒤 다시 실행하세요."
+  exit 0
+fi
 
 PROMPT="The project directory is: $REPO
 All file reads, file writes, and git commits MUST happen inside that exact directory.
@@ -92,7 +99,7 @@ for i in $(seq 1 "$MAX_ITERS"); do
   after_head="$(git rev-parse HEAD 2>/dev/null || echo none)"
   after_done="$(count_done)"; after_done="${after_done:-0}"
 
-  if grep -q "ALL TASKS COMPLETE" "$PROGRESS" 2>/dev/null; then
+  if all_done; then
     echo "✅ 모든 태스크 완료 — $i 회 반복 후 종료합니다."
     exit 0
   fi
