@@ -1,5 +1,9 @@
 # Multi-Model Ralph Loop Test Plan
 
+> **내부 실험 기록 (참고용 — 참가자 실행 대상 아님)**
+> 이 문서는 행사 준비 과정에서 초기 모델들을 비교 테스트할 때 작성한 내부 계획서입니다.
+> 본문에 언급된 모델명(`Claude Sonnet 4.6`, `Gemini 3.1 Pro`, `Gemini 3.5 Flash`)과 `Ralph loop PRD` 기준 커밋은 초기 실험 저장소 기준이며, 현재 워크숍 템플릿의 기본 설정(계정 기본 모델)과는 다릅니다. 참가자는 루트의 [README.md](../../README.md)와 [PRD.md](../../PRD.md)를 따라 진행하세요.
+
 ## 목적
 
 동일한 PRD를 여러 LLM 모델에서 실행하여 ralph-loop의 모델별 성능을 비교 평가한다.

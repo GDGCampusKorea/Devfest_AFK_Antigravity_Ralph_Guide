@@ -25,26 +25,25 @@
 
 ## Agent Operating Rules (Ralph Loop)
 - Complete **exactly ONE unchecked task** per iteration (the lowest-numbered `[ ]`).
-- After finishing, mark it `[x]` here, then **append** a line to `progress.txt`
-  (format: `TASK <n> DONE — <one-line summary>`). Never delete progress history.
-- Commit the changes for that single task with message `feat: task <n> — <summary>`.
-- Verify each task against its **Done when** criteria before marking complete.
+- Read `AGENTS.md` (if present) and follow any project-specific guardrails in it.
+- Verify the task against its **Done when** criteria by running concrete checks before marking it complete.
+- **If verification fails**: fix the issue and re-verify. If you still cannot satisfy **Done when**, do **NOT** mark `[x]` and do **NOT** commit — leave it `[ ]`, append `TASK <n> BLOCKED — <short reason>` to `progress.txt`, and stop.
+- **If verification passes**: mark the task `[x]` in `PRD.md`, **append** a line to `progress.txt` (`TASK <n> DONE — <one-line summary>`, never delete history), and commit the task's code changes **together with `PRD.md` and `progress.txt`** in a single commit (`feat: task <n> — <summary>`).
 - Do NOT start the next task in the same iteration. Stop after one.
-- If all tasks are `[x]`, append `ALL TASKS COMPLETE` to `progress.txt` and stop.
 
 ## Tasks
-<!-- 태스크 하나 = 에이전트가 10분 안에 끝낼 수 있는 크기. 완료 기준은 눈으로 확인 가능하게. -->
+<!-- 태스크 하나 = 에이전트가 10분 안에 끝낼 수 있는 크기. 완료 기준은 실행 가능한 명령과 기대 출력으로 작성. -->
 - [ ] 1. Create `TEAM.md` containing the project name, the one-sentence problem, and the team
       roles table copied from this PRD.
-      **Done when:** `TEAM.md` exists and matches the PRD sections above.
+      **Done when:** `test -f TEAM.md && grep -q "PRD 작성" TEAM.md && grep -q "랄프 관리" TEAM.md` exits 0.
 - [ ] 2. {{첫 번째 실제 작업: 프로젝트 뼈대 만들기}}
-      **Done when:** {{확인 방법}}
+      **Done when:** {{실행 가능한 검증 명령과 기대 출력}}
 - [ ] 3. {{핵심 기능 구현}}
-      **Done when:** {{확인 방법}}
+      **Done when:** {{실행 가능한 검증 명령과 기대 출력}}
 - [ ] 4. {{다듬기·오류 처리}}
-      **Done when:** {{확인 방법}}
+      **Done when:** {{실행 가능한 검증 명령과 기대 출력}}
 - [ ] 5. Write `README.md` with how to run the project and a short feature description.
-      **Done when:** following README from a clean clone runs the project.
+      **Done when:** `test -f README.md && grep -qE "실행|Run|Usage" README.md` exits 0 and the documented run command succeeds from a clean state.
 
 ## Definition of Done
 {{심사 때 보여줄 장면 한 줄. 예: "PDF 3개를 올리면 분류 표가 화면에 나온다."}}
